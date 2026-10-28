@@ -1,6 +1,8 @@
-FROM python:3.9
+FROM python:3.12-alpine
 WORKDIR /app
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 COPY requirements.txt .
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 COPY app.py .
+USER appuser
 CMD ["python", "app.py"]
